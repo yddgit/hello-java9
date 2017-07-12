@@ -1,0 +1,3 @@
+module yddutil {
+	exports ydd;
+}
