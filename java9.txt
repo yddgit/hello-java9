@@ -76,4 +76,29 @@ Java 9
 
 8.隐藏第一个module中不对外的接口
 
-9.service
+  在模块yddutil中添加一个类internal/Internal.java
+  package internal;
+  public class Internal {
+    public void m() {
+      System.out.println("Method Internal.m() invoked!");
+    }
+  }
+  在模块ydd.test中ydd/test/Test.java中引入: import internal.Internal;
+  编译: javac --module-source-path src -d out src\yddutil\ydd\*.java src\yddutil\internal\*.java src\yddutil\module-info.java src\ydd.test\ydd\test\*.java src\ydd.test\module-info.java
+  此时会出现如下报错:
+
+  src\ydd.test\ydd\test\Test.java:4: 错误: 程序包 internal 不可见
+  import internal.Internal;
+         ^
+    (程序包 internal 已在模块 yddutil 中声明, 但该模块未导出它)
+  1 个错误
+
+  因此, 尝试引入一个模块中未公开的类, 编译就会报错
+
+9.其他模块化设计思想的应用: COM+/WebService/OSGI
+
+10.Java9模块化编程中的概念:
+  service: 一个模块对外公开的interface
+  service implementation: 以上公开的interface的实现
+
+
